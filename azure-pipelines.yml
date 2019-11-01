@@ -18,12 +18,22 @@ steps:
 
 - script: |
     npm install -g @angular/cli
+  displayName: 'npm install angular'
+
+- script: |
     npm install
+  displayName: 'npm install'
+  
+- script: |
     ng build --prod
-  displayName: 'npm install and build'
+  displayName: 'ng build'
+
+- script: |
+    dir
+  displayName: 'list cwd contents (verify build)'
 - task: AzureFileCopy@3
   inputs:
-    SourcePath: '$(Build.SourcesDirectory)/dist/innovatiedag-angular/'
+    SourcePath: '$(Build.SourcesDirectory)/dist/innovatiedag-angular'
     azureSubscription: 'Betalen naar gebruik(231ba11f-b167-49ce-bd39-3e76b4f324f8)'
     Destination: 'AzureBlob'
     storage: 'innovatiedagangular'
