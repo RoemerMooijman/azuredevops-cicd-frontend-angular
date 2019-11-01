@@ -9,14 +9,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-- task: AzureFileCopy@3
-  inputs:
-    SourcePath: '$(build.sourceDirectory)/dist/innovatiedag-angular'
-    azureSubscription: 'Betalen naar gebruik(231ba11f-b167-49ce-bd39-3e76b4f324f8)'
-    Destination: 'AzureBlob'
-    storage: 'innovatiedagangular'
-    ContainerName: 'Roemer-container'
-    BlobPrefix: 'roemer-'
 steps:
 - task: NodeTool@0
   inputs:
@@ -28,3 +20,12 @@ steps:
     npm install
     ng build --prod
   displayName: 'npm install and build'
+
+- task: AzureFileCopy@3
+  inputs:
+    SourcePath: '$(build.sourceDirectory)/dist/innovatiedag-angular'
+    azureSubscription: 'Betalen naar gebruik(231ba11f-b167-49ce-bd39-3e76b4f324f8)'
+    Destination: 'AzureBlob'
+    storage: 'innovatiedagangular'
+    ContainerName: '\$web'
+    BlobPrefix: 'roemer-'
